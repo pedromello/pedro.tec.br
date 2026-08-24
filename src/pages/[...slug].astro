@@ -1,0 +1,107 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  previous?: CollectionEntry<'blog'>;
+  next?: CollectionEntry<'blog'>;
+}
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft))
+    .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: { post, previous: posts[index + 1], next: posts[index - 1] },
+  }));
+}
+
+const { post, previous, next } = Astro.props;
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const date = post.data.publishedAt.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const words = post.body?.trim().split(/\s+/).length ?? 0;
+const minutes = Math.max(1, Math.ceil(words / 220));
+const canonical = new URL(`/${post.id}/`, Astro.site).toString();
+const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`;
+const seoTitle = post.data.seoTitle || `${post.data.title} | Pedro Mello`;
+const seoDescription = post.data.seoDescription || post.data.description;
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .filter((entry) => entry.id !== post.id);
+const relatedPosts = allPosts
+  .map((entry) => ({
+    entry,
+    score: (entry.data.category === post.data.category ? 4 : 0)
+      + entry.data.tags.filter((tag) => post.data.tags.includes(tag)).length,
+  }))
+  .sort((a, b) => b.score - a.score || b.entry.data.publishedAt.valueOf() - a.entry.data.publishedAt.valueOf())
+  .slice(0, 3)
+  .map(({ entry }) => entry);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${canonical}#article`,
+      headline: post.data.title,
+      description: seoDescription,
+      image: {
+        '@type': 'ImageObject',
+        url: new URL(post.data.cover, Astro.site).toString(),
+        width: 1200,
+        height: 630,
+        caption: post.data.coverAlt,
+      },
+      datePublished: post.data.publishedAt.toISOString(),
+      dateModified: (post.data.updatedAt || post.data.publishedAt).toISOString(),
+      author: { '@type': 'Person', '@id': 'https://pedro.tec.br/#person', name: 'Pedro Mello', url: 'https://pedro.tec.br/about/' },
+      publisher: { '@type': 'Person', '@id': 'https://pedro.tec.br/#person', name: 'Pedro Mello' },
+      mainEntityOfPage: canonical,
+      isPartOf: { '@id': 'https://pedro.tec.br/blog/#blog' },
+      inLanguage: 'en-US',
+      articleSection: post.data.category,
+      keywords: post.data.tags.join(', '),
+      wordCount: words,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://pedro.tec.br/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://pedro.tec.br/blog/' },
+        { '@type': 'ListItem', position: 3, name: post.data.title, item: canonical },
+      ],
+    },
+  ],
+};
+---
+<BaseLayout title={seoTitle} description={seoDescription} image={post.data.cover} imageAlt={post.data.coverAlt} type="article" publishedAt={post.data.publishedAt} updatedAt={post.data.updatedAt || post.data.publishedAt} structuredData={structuredData}>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <article class="container article-shell">
+    <header class="article-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>{post.data.category}</span></nav>
+      <div class="post-meta"><span class="post-category">{post.data.category}</span><span aria-hidden="true">•</span><time datetime={post.data.publishedAt.toISOString()}>{date}</time><span aria-hidden="true">•</span><span>{minutes} min read</span></div>
+      <h1>{post.data.title}</h1>
+      <p class="article-dek">{post.data.description}</p>
+      <a class="article-byline" href="/about/" rel="author"><span>By Pedro Mello</span><small>Software Engineering Manager & Agent Engineer</small></a>
+    </header>
+    <figure class="article-cover"><img src={post.data.cover} alt={post.data.coverAlt} width="1200" height="630" decoding="async" fetchpriority="high" /></figure>
+    <div class="article-layout">
+      {tocHeadings.length > 1 && <aside class="toc" aria-label="Table of contents"><span class="toc-label">In this article</span><nav>{tocHeadings.map((heading) => <a class={`depth-${heading.depth}`} href={`#${heading.slug}`}>{heading.text}</a>)}</nav></aside>}
+      <div class="prose"><Content /></div>
+    </div>
+    <footer class="article-footer">
+      <div class="article-share"><p>Found this useful? Share it with your network.</p><div class="share-actions"><a href={linkedInShare} target="_blank" rel="noopener" data-analytics="article_share_linkedin">LinkedIn ↗</a><button class="copy-page-link" type="button">Copy link</button></div></div>
+      {relatedPosts.length > 0 && <section class="related-section" aria-labelledby="related-title"><p class="eyebrow">Continue reading</p><h2 id="related-title">Related field notes</h2><div class="related-list">{relatedPosts.map((entry) => <a href={`/${entry.id}/`}><span>{entry.data.category}</span><strong>{entry.data.title}</strong></a>)}</div></section>}
+      {(previous || next) && <nav class="article-nav" aria-label="More articles">{previous ? <a href={`/${previous.id}/`}><span>Older article</span><strong>{previous.data.title}</strong></a> : <span></span>}{next && <a href={`/${next.id}/`}><span>Newer article</span><strong>{next.data.title}</strong></a>}</nav>}
+    </footer>
+  </article>
+  <script is:inline>
+    const progress=document.querySelector('.reading-progress');const updateProgress=()=>{if(!progress)return;const scrollable=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=`${scrollable>0?(window.scrollY/scrollable)*100:0}%`};window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+    document.querySelectorAll('.prose pre').forEach((pre)=>{const button=document.createElement('button');button.type='button';button.className='code-copy';button.textContent='Copy';button.addEventListener('click',async()=>{const code=pre.querySelector('code')?.textContent||'';await navigator.clipboard.writeText(code);button.textContent='Copied';setTimeout(()=>button.textContent='Copy',1600)});pre.appendChild(button)});
+    document.querySelector('.copy-page-link')?.addEventListener('click',async(event)=>{await navigator.clipboard.writeText(window.location.href);event.currentTarget.textContent='Copied';setTimeout(()=>event.currentTarget.textContent='Copy link',1600)});
+  </script>
+</BaseLayout>

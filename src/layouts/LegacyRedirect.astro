@@ -1,0 +1,17 @@
+---
+interface Props { target?: string; }
+const { target = '/blog/' } = Astro.props;
+const absoluteTarget = new URL(target, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={absoluteTarget} />
+    <title>Moved to the Pedro Mello blog</title>
+  </head>
+  <body><p>This archive moved to <a href={target}>Pedro Mello’s engineering blog</a>.</p></body>
+</html>

@@ -1,0 +1,25 @@
+---
+const eventsEnabled = import.meta.env.PUBLIC_ENABLE_EVENTS === 'true';
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/brand/logo.webp" alt="Pedro Mello" width="720" height="138" />
+      <p>Engineering leadership, private agent systems and sovereign infrastructure grounded in real-world financial software.</p>
+    </div>
+    <div class="footer-column"><strong>Explore</strong><a href="/">Home</a><a href="/about/">About</a><a href="/blog/">Blog</a>{eventsEnabled && <a href="/events/">Events</a>}<a href="/rss.xml">RSS feed</a></div>
+    <div class="footer-column footer-project">
+      <strong>Manifold Powered</strong>
+      <p>An open-source game distribution infrastructure project I created and lead.</p>
+      <a href="https://manifoldpowered.com/" target="_blank" rel="noopener" data-analytics="manifold_website_click">Website ↗</a>
+      <a href="https://github.com/pedromello/manifoldpowered.com" target="_blank" rel="noopener" data-analytics="manifold_github_click">GitHub ↗</a>
+    </div>
+    <div class="footer-column">
+      <strong>Connect</strong>
+      <a href="https://www.linkedin.com/in/pedro-renato-mello/" target="_blank" rel="me noopener" data-analytics="linkedin_click">LinkedIn ↗</a>
+      <a href="https://github.com/pedromello" target="_blank" rel="me noopener" data-analytics="github_click">GitHub ↗</a>
+      <a href="mailto:contact@pedro.tec.br" data-analytics="email_click">Email ↗</a>
+    </div>
+  </div>
+  <div class="container footer-bottom"><span>© {new Date().getFullYear()} Pedro Mello. Built with care and Astro.</span><span><a href="/privacy-policy/">Privacy</a> · Rio de Janeiro, Brazil · Available worldwide</span></div>
+</footer>

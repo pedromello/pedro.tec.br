@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf()-a.data.publishedAt.valueOf());
+const focusAreas = [
+  { number: '01', title: 'Software Engineering Management', text: 'Technical direction, delivery systems and team development — connecting business priorities to maintainable engineering decisions.' },
+  { number: '02', title: 'Agent Engineering', text: 'Purpose-built agents with explicit tools, evaluation loops, observability and human checkpoints instead of opaque AI wrappers.' },
+  { number: '03', title: 'Sovereign Infrastructure', text: 'Private deployments with controlled data paths, portable models and operational independence from a single platform vendor.' },
+];
+const strengths = [
+  { number: '01', title: 'Systems problem solving', text: 'I deconstruct ambiguous problems into constraints, decisions and testable steps — from production incidents to greenfield architecture.' },
+  { number: '02', title: 'Product-oriented engineering', text: 'I connect customer value, business strategy and technical execution so teams build the right system before optimizing the code.' },
+  { number: '03', title: 'Technology agnostic', text: 'The constraint chooses the tool. My background across Python, TypeScript, C# and Solidity helps me avoid framework-led decisions.' },
+  { number: '04', title: 'Formal foundations', text: 'Algorithms, data structures and computational reasoning give me a durable base for designing efficient, scalable software.' },
+  { number: '05', title: 'Technical leadership', text: 'I create clarity around architecture, ownership and delivery while giving engineers the context and trust to do their best work.' },
+  { number: '06', title: 'Constructive collaboration', text: 'Clear communication, empathy and an optimistic mindset make hard technical conversations safer and more productive.' },
+];
+const proof = [
+  { number: '01', title: 'Web2 ↔ Web3 payment rails', text: 'Led a gateway connecting instant cryptocurrency payments, fiat settlement, collateral systems and automated stakeholder splits.' },
+  { number: '02', title: 'Private capital infrastructure', text: 'Built asset-management and distribution software for financial products in a private capital marketplace.' },
+  { number: '03', title: 'From architecture to the stage', text: 'Selected to present our marketplace solution at the Dubai FinTech Summit after helping turn the underlying idea into a working product.' },
+];
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://pedro.tec.br/#website',
+      url: 'https://pedro.tec.br/',
+      name: 'Pedro Mello',
+      alternateName: 'Pedro Renato Mello',
+      inLanguage: 'en-US',
+      publisher: { '@id': 'https://pedro.tec.br/#person' },
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': 'https://pedro.tec.br/#profile',
+      url: 'https://pedro.tec.br/',
+      name: 'Pedro Mello — Software Engineering Manager & Agent Engineer',
+      description: 'Pedro Mello leads software teams and builds private agent systems on sovereign infrastructure.',
+      inLanguage: 'en-US',
+      isPartOf: { '@id': 'https://pedro.tec.br/#website' },
+      mainEntity: { '@id': 'https://pedro.tec.br/#person' },
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://pedro.tec.br/#person',
+      name: 'Pedro Renato Mello',
+      alternateName: 'Pedro Mello',
+      url: 'https://pedro.tec.br/',
+      jobTitle: 'Software Engineering Manager & Agent Engineer',
+      description: 'Software engineering leader focused on reliable private agents, sovereign infrastructure, FinTech and payment systems.',
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://pedro.tec.br/brand/pedro-dubai.jpg',
+        caption: 'Pedro Mello speaking at the Dubai FinTech Summit',
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Rio de Janeiro',
+        addressCountry: 'BR',
+      },
+      sameAs: [
+        'https://www.linkedin.com/in/pedro-renato-mello/',
+        'https://github.com/pedromello',
+        'https://stackoverflow.com/users/6204546/pedro-renato-mello',
+      ],
+      knowsAbout: ['Software Engineering Management','Agent Engineering','Sovereign Infrastructure','FinTech','DeFi','Payment Systems','Software Architecture','Python','TypeScript','Solidity'],
+    },
+  ],
+};
+---
+<BaseLayout title="Pedro Mello | Engineering Manager & Agent Engineer" description="Pedro Mello leads software teams and builds private AI agents on sovereign infrastructure, backed by experience in FinTech, payments and DeFi." structuredData={structuredData}>
+  <div class="home-page">
+    <section class="container hero home-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Software Engineering Manager · Agent Engineering</p>
+        <h1><small>Pedro Mello</small>I lead teams building AI systems companies can <span>own.</span></h1>
+        <p class="hero-lead">My focus is Agent Engineering for private companies: reliable agents deployed on sovereign infrastructure, with control over data, models and operations.</p>
+        <p class="hero-context">I bring the same methodical, product-oriented approach I used across FinTech, DeFi, payment systems and private capital markets.</p>
+        <div class="hero-actions"><a class="button" href="#focus">See my focus <span aria-hidden="true">↓</span></a><a class="button secondary" href="/about/">About my work</a><a class="button secondary" href="/blog/">Read the field notes</a></div>
+        <div class="hero-proof" aria-label="Core positioning"><div><strong>Engineering leadership</strong>Teams, architecture, delivery</div><div><strong>Agent systems</strong>Tools, evals, observability</div><div><strong>Sovereign by design</strong>Private, portable, controlled</div></div>
+      </div>
+      <div class="portrait-card">
+        <div class="portrait-frame"><img src="/brand/pedro-dubai.jpg" alt="Pedro Mello speaking at the Dubai FinTech Summit" width="640" height="780" /></div>
+        <div class="portrait-note"><span>Current focus</span><strong>Engineering leadership and private AI infrastructure.</strong></div>
+      </div>
+    </section>
+
+    <section class="home-section border-top" id="focus"><div class="container focus-layout">
+      <div class="focus-intro"><p class="eyebrow">Current direction</p><h2>Agents are software systems, not demos.</h2><p>For private companies, useful AI must be inspectable, measurable and operable inside infrastructure they control. That requires engineering discipline as much as model capability.</p></div>
+      <div class="focus-grid">{focusAreas.map((item)=><article class="focus-card"><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.text}</p></div></article>)}</div>
+    </div></section>
+
+    <section class="home-section border-top" id="strengths"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Core strengths</p><h2>What I bring to difficult engineering work.</h2></div><p>These are the principles behind how I make decisions, lead teams and turn uncertain problems into working products.</p></div>
+      <div class="strength-grid">{strengths.map((strength)=><article class="strength-card"><span class="strength-index">{strength.number}</span><div><h3>{strength.title}</h3><p>{strength.text}</p></div></article>)}</div>
+    </div></section>
+
+    <section class="home-section border-top"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Selected proof</p><h2>Work grounded in real constraints.</h2></div><p>Financial rules, multiple stakeholders, security requirements and production deadlines leave little room for vague architecture.</p></div>
+      <div class="impact-grid">{proof.map((item)=><article class="impact-card"><span class="impact-number">{item.number}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+    </div></section>
+
+    <section class="home-section border-top" id="writing"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Latest writing</p><h2>Notes from the systems layer.</h2></div><a class="text-link" href="/blog/">Browse all articles <span aria-hidden="true">→</span></a></div>
+      <div class="writing-grid">{posts.slice(0,4).map((post)=><PostCard post={post} />)}</div>
+    </div></section>
+
+    <section class="home-section border-top"><div class="container home-contact"><div><p class="eyebrow">Let's work together</p><h2>Building a team or a private agent platform?</h2><p>I’m interested in engineering leadership and agent-system work where privacy, ownership and reliability are non-negotiable.</p></div><a class="button" href="mailto:contact@pedro.tec.br" data-analytics="email_click">contact@pedro.tec.br ↗</a></div></section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,88 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  type?: 'website'|'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  image,
+  imageAlt = 'Pedro Mello — Software Engineering Manager and Agent Engineer',
+  imageWidth = 1200,
+  imageHeight = 630,
+  type = 'website',
+  publishedAt,
+  updatedAt,
+  structuredData,
+  noindex = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const absoluteImage = new URL(image || '/og.jpg', Astro.site);
+const googleTagId = import.meta.env.PUBLIC_GOOGLE_TAG_ID || 'GT-5NPZT8FB';
+const enableAnalytics = import.meta.env.PROD && Boolean(googleTagId);
+const robots = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+const structuredDataItems = structuredData
+  ? (Array.isArray(structuredData) ? structuredData : [structuredData])
+  : [];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#07111f" /><meta name="description" content={description} /><meta name="author" content="Pedro Mello" /><meta name="robots" content={robots} /><link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" /><link rel="alternate" type="application/rss+xml" title="Pedro Mello — Blog" href={new URL('/rss.xml', Astro.site)} />
+    <title>{title}</title>
+    <meta property="og:type" content={type} /><meta property="og:locale" content="en_US" /><meta property="og:site_name" content="Pedro Mello" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage} /><meta property="og:image:alt" content={imageAlt} /><meta property="og:image:width" content={String(imageWidth)} /><meta property="og:image:height" content={String(imageHeight)} />{publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}{updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    {structuredDataItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a><Header /><main id="main-content"><slot /></main><Footer />
+    {enableAnalytics && <aside class="consent-banner" data-consent-banner hidden aria-label="Analytics preferences">
+      <div><strong>Privacy-friendly analytics</strong><p>I use Google Analytics to understand which articles are useful. Analytics only loads after you accept.</p></div>
+      <div class="consent-actions"><button type="button" data-consent-accept>Accept analytics</button><button type="button" data-consent-decline>Essential only</button><a href="/privacy-policy/">Privacy policy</a></div>
+    </aside>}
+    {enableAnalytics && <script is:inline define:vars={{ googleTagId }}>
+      (()=>{
+        const storageKey='pedro_analytics_consent_v1';
+        const banner=document.querySelector('[data-consent-banner]');
+        const loadAnalytics=()=>{
+          if(window.__pedroAnalyticsLoaded)return;
+          window.__pedroAnalyticsLoaded=true;
+          window.dataLayer=window.dataLayer||[];
+          window.gtag=function(){window.dataLayer.push(arguments)};
+          window.gtag('js',new Date());
+          window.gtag('config',googleTagId);
+          const script=document.createElement('script');
+          script.async=true;
+          script.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleTagId)}`;
+          document.head.appendChild(script);
+        };
+        const choice=localStorage.getItem(storageKey);
+        if(choice==='granted')loadAnalytics();
+        if(!choice&&banner)banner.hidden=false;
+        banner?.querySelector('[data-consent-accept]')?.addEventListener('click',()=>{localStorage.setItem(storageKey,'granted');loadAnalytics();banner.hidden=true});
+        banner?.querySelector('[data-consent-decline]')?.addEventListener('click',()=>{localStorage.setItem(storageKey,'denied');banner.hidden=true});
+      })();
+    </script>}
+    <script is:inline>
+      document.addEventListener('click',(event)=>{const target=event.target.closest('[data-analytics]');if(!target||typeof window.gtag!=='function')return;window.gtag('event',target.dataset.analytics,{link_url:target.href||'',link_text:target.textContent?.trim()||''})});
+    </script>
+  </body>
+</html>

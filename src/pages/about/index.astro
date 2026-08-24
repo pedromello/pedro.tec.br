@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'AboutPage',
+      '@id': 'https://pedro.tec.br/about/#page',
+      url: 'https://pedro.tec.br/about/',
+      name: 'About Pedro Mello',
+      description: 'Background, current focus and selected work from software engineering manager and agent engineer Pedro Mello.',
+      inLanguage: 'en-US',
+      isPartOf: { '@id': 'https://pedro.tec.br/#website' },
+      mainEntity: { '@id': 'https://pedro.tec.br/#person' },
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://pedro.tec.br/#person',
+      name: 'Pedro Renato Mello',
+      alternateName: 'Pedro Mello',
+      url: 'https://pedro.tec.br/',
+      jobTitle: 'Software Engineering Manager & Agent Engineer',
+      description: 'Software engineering leader focused on private agent systems, sovereign infrastructure, FinTech and payment systems.',
+      image: 'https://pedro.tec.br/brand/pedro-dubai.jpg',
+      address: { '@type': 'PostalAddress', addressLocality: 'Rio de Janeiro', addressCountry: 'BR' },
+      sameAs: [
+        'https://www.linkedin.com/in/pedro-renato-mello/',
+        'https://github.com/pedromello',
+        'https://stackoverflow.com/users/6204546/pedro-renato-mello',
+      ],
+      knowsAbout: ['Software Engineering Management','Agent Engineering','Sovereign Infrastructure','FinTech','DeFi','Payment Systems','Software Architecture'],
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://pedro.tec.br/' },
+        { '@type': 'ListItem', position: 2, name: 'About Pedro Mello', item: 'https://pedro.tec.br/about/' },
+      ],
+    },
+  ],
+};
+---
+<BaseLayout title="About Pedro Mello | Engineering Manager & Agent Engineer" description="Meet Pedro Mello, a software engineering manager focused on private agent systems, sovereign infrastructure, FinTech and reliable software architecture." structuredData={structuredData}>
+  <article class="about-page">
+    <header class="container about-hero">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>About</span></nav>
+      <p class="eyebrow">About Pedro Mello</p>
+      <div class="about-hero-grid">
+        <div><h1>Engineering leadership grounded in <span>systems work.</span></h1></div>
+        <div class="about-lead"><p>I’m Pedro Renato Mello, professionally known as Pedro Mello. I lead software teams and build reliable agent systems for companies that need control over their data, models and operations.</p><p>My work connects product thinking, technical direction and operational discipline — especially where financial rules, privacy and infrastructure ownership matter.</p></div>
+      </div>
+    </header>
+
+    <section class="about-section border-top"><div class="container about-split">
+      <div><p class="eyebrow">Current focus</p><h2>Private agents on sovereign infrastructure.</h2></div>
+      <div class="about-copy"><p>I approach Agent Engineering as software engineering: explicit tools, measurable evaluations, observability, human checkpoints and dependable deployment practices.</p><p>For private companies, that also means portable models, controlled data paths and the ability to operate without being locked into a single platform vendor.</p></div>
+    </div></section>
+
+    <section class="about-section border-top"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Selected experience</p><h2>Proof built under real constraints.</h2></div><p>Financial systems make architecture decisions visible: security, compliance, multiple stakeholders and production reliability cannot be postponed.</p></div>
+      <div class="about-proof-grid">
+        <article><span>01</span><h3>Web2 ↔ Web3 payment rails</h3><p>Led the development of infrastructure connecting cryptocurrency payments, fiat settlement, collateral systems and automated stakeholder splits.</p></article>
+        <article><span>02</span><h3>Private capital infrastructure</h3><p>Built asset-management and distribution software for financial products in a private capital marketplace.</p></article>
+        <article><span>03</span><h3>Dubai FinTech Summit</h3><p>Selected to present a marketplace solution after helping turn its underlying architecture into a working product.</p></article>
+        <article><span>04</span><h3>Manifold Powered</h3><p>Created and lead an open-source infrastructure project for independent game distribution.</p><a class="text-link" href="https://manifoldpowered.com/" target="_blank" rel="noopener">Visit the project ↗</a></article>
+      </div>
+    </div></section>
+
+    <section class="about-section border-top"><div class="container about-split">
+      <div><p class="eyebrow">How I work</p><h2>Clarity before complexity.</h2></div>
+      <div class="about-copy"><p>I deconstruct ambiguous problems into constraints, decisions and testable steps. The constraint chooses the technology, and product value guides where engineering effort belongs.</p><p>I’m based in Rio de Janeiro, Brazil, and available for engineering leadership and agent-system work worldwide.</p><div class="about-actions"><a class="button" href="mailto:contact@pedro.tec.br" data-analytics="email_click">Contact me ↗</a><a class="button secondary" href="/PedroMello_CV_2025.pdf" target="_blank" data-analytics="resume_download">Read my resume ↗</a></div></div>
+    </div></section>
+  </article>
+</BaseLayout>

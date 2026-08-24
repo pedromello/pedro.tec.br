@@ -1,0 +1,9 @@
+---
+import LegacyRedirect from '../../layouts/LegacyRedirect.astro';
+
+export function getStaticPaths() {
+  const legacyTags = ['tutorials','devops','cloud','digitalocean','ssh','mongodump','backup','mongodb','tests','s3','aws'];
+  return legacyTags.map((slug) => ({ params: { slug } }));
+}
+---
+<LegacyRedirect />

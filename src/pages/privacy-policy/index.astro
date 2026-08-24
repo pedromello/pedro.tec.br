@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://pedro.tec.br/privacy-policy/#page',
+      url: 'https://pedro.tec.br/privacy-policy/',
+      name: 'Privacy Policy — Pedro Mello',
+      description: 'How pedro.tec.br uses privacy-friendly analytics and handles visitor information.',
+      inLanguage: 'en-US',
+      isPartOf: { '@id': 'https://pedro.tec.br/#website' },
+      dateModified: '2026-08-24',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://pedro.tec.br/' },
+        { '@type': 'ListItem', position: 2, name: 'Privacy Policy', item: 'https://pedro.tec.br/privacy-policy/' },
+      ],
+    },
+  ],
+};
+---
+<BaseLayout title="Privacy Policy | Pedro Mello" description="How pedro.tec.br uses privacy-friendly analytics and handles visitor information." structuredData={structuredData}>
+  <article class="container policy-page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Privacy policy</span></nav>
+    <p class="eyebrow">Privacy</p>
+    <h1>Privacy policy</h1>
+    <p class="policy-updated">Last updated: August 24, 2026</p>
+
+    <div class="policy-content">
+      <section><h2>Overview</h2><p>This is the personal portfolio and technical blog of Pedro Mello. The site does not offer user accounts, comments, advertising or a contact form. You can contact me directly at <a href="mailto:contact@pedro.tec.br">contact@pedro.tec.br</a>.</p></section>
+
+      <section><h2>Google Analytics</h2><p>Google Analytics is used to understand which pages and articles are useful. Analytics only loads after you choose “Accept analytics” in the privacy prompt.</p><p>When accepted, Analytics may collect page views, session information, approximate location, browser and device information, referral sources and interactions such as resume downloads or outbound link clicks. Google Analytics may store a first-party cookie such as <code>_ga</code> to distinguish visits.</p></section>
+
+      <section><h2>Your choice</h2><p>If you choose “Essential only”, the Google Analytics script is not loaded. Your preference is stored locally in your browser. You can reset that choice at any time by clearing site data for pedro.tec.br.</p></section>
+
+      <section><h2>External links</h2><p>The site links to external services including LinkedIn, GitHub, Stack Overflow and Manifold Powered. Those services have their own privacy practices and may receive standard request information when you visit them.</p></section>
+
+      <section><h2>Data sharing and retention</h2><p>I do not sell personal information. Analytics data is processed by Google under the settings of the connected Google Analytics property and retained according to that property’s retention configuration.</p></section>
+
+      <section><h2>Contact</h2><p>Questions or requests about this policy can be sent to <a href="mailto:contact@pedro.tec.br">contact@pedro.tec.br</a>.</p></section>
+    </div>
+  </article>
+</BaseLayout>

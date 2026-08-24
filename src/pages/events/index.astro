@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const eventsEnabled = import.meta.env.PUBLIC_ENABLE_EVENTS === 'true';
+if (!eventsEnabled) return Astro.redirect('/', 302);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Events & Talks — Pedro Mello',
+  description: 'A visual archive of events, talks and technical conversations featuring Pedro Mello.',
+  url: 'https://pedro.tec.br/events/',
+};
+---
+<BaseLayout title="Events & Talks | Pedro Mello" description="A visual archive of events, talks and technical conversations featuring Pedro Mello." structuredData={structuredData}>
+  <section class="container events-hero">
+    <p class="eyebrow">Events & Talks · Concept preview</p>
+    <h1>Ideas, stages and <span>conversations.</span></h1>
+    <div class="events-intro"><p>A visual record of the places where software, finance and product thinking leave the screen and meet an audience.</p><p>Each event can combine photographs, context, talk materials and related writing in one permanent page.</p></div>
+  </section>
+
+  <section class="events-section"><div class="container">
+    <header class="event-heading">
+      <div><p class="event-number">01 / Featured event</p><h2>Dubai FinTech Summit</h2></div>
+      <dl class="event-facts"><div><dt>Location</dt><dd>Dubai, UAE</dd></div><div><dt>Role</dt><dd>Marketplace presenter</dd></div><div><dt>Year</dt><dd>2025</dd></div></dl>
+    </header>
+
+    <div class="event-album" aria-label="Dubai FinTech Summit photo album preview">
+      <button class="event-photo event-photo-main" type="button" data-lightbox-open aria-label="Expand photo of Pedro Mello speaking at the Dubai FinTech Summit">
+        <img src="/brand/pedro-dubai.jpg" alt="Pedro Mello speaking at the Dubai FinTech Summit" width="900" height="1100" />
+        <span class="event-photo-caption"><strong>On stage</strong><small>Presenting a private capital marketplace</small></span>
+      </button>
+      <div class="event-photo-slot"><span>02</span><div><strong>Audience & venue</strong><small>Add event atmosphere</small></div></div>
+      <div class="event-photo-slot"><span>03</span><div><strong>Networking</strong><small>Add the people behind the conversations</small></div></div>
+      <div class="event-photo-slot"><span>04</span><div><strong>Behind the scenes</strong><small>Add preparation and candid moments</small></div></div>
+    </div>
+
+    <div class="event-story">
+      <p class="event-number">About this event</p>
+      <div><h3>From product architecture to public presentation.</h3><p>I was selected to present the goAssets marketplace solution at the Dubai FinTech Summit after helping build the asset-management infrastructure behind it. This album would preserve both the professional milestone and the people, conversations and context around it.</p></div>
+      <div class="event-resources"><span>Possible resources</span><a href="/blog/">Related article ↗</a><a href="https://www.linkedin.com/in/pedro-renato-mello/" target="_blank" rel="noopener">LinkedIn post ↗</a><span>Slides / video</span></div>
+    </div>
+  </div></section>
+
+  <section class="events-archive"><div class="container events-archive-heading"><div><p class="eyebrow">Event archive</p><h2>Designed to grow one event at a time.</h2></div><p>Future events would appear here as compact entries with a cover image, role, location and date. The most important story remains featured above.</p></div></section>
+
+  <dialog class="event-lightbox" aria-label="Expanded event photo">
+    <button type="button" data-lightbox-close aria-label="Close expanded photo">Close ×</button>
+    <img src="/brand/pedro-dubai.jpg" alt="Pedro Mello speaking at the Dubai FinTech Summit" />
+    <p>Dubai FinTech Summit · Marketplace presentation · 2025</p>
+  </dialog>
+  <script is:inline>
+    const dialog=document.querySelector('.event-lightbox');
+    document.querySelector('[data-lightbox-open]')?.addEventListener('click',()=>dialog?.showModal());
+    document.querySelector('[data-lightbox-close]')?.addEventListener('click',()=>dialog?.close());
+    dialog?.addEventListener('click',(event)=>{if(event.target===dialog)dialog.close()});
+  </script>
+</BaseLayout>

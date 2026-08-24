@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+const posts = (await getCollection('blog', ({data}) => !data.draft)).sort((a,b)=>b.data.publishedAt.valueOf()-a.data.publishedAt.valueOf());
+const [featured,...remaining] = posts;
+const topics = [...new Set(posts.map((post)=>post.data.category))];
+const featureDate = featured?.data.publishedAt.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Blog',
+      '@id': 'https://pedro.tec.br/blog/#blog',
+      url: 'https://pedro.tec.br/blog/',
+      name: 'Software Engineering Blog by Pedro Mello',
+      description: 'Technical articles on agent engineering, sovereign infrastructure, FinTech, DevOps and reliable software systems.',
+      inLanguage: 'en-US',
+      author: { '@id': 'https://pedro.tec.br/#person' },
+      blogPost: posts.map((post) => ({ '@type': 'BlogPosting', headline: post.data.title, url: `https://pedro.tec.br/${post.id}/`, datePublished: post.data.publishedAt.toISOString() })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://pedro.tec.br/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://pedro.tec.br/blog/' },
+      ],
+    },
+  ],
+};
+---
+<BaseLayout title="Software Engineering Blog | Pedro Mello" description="Technical articles by Pedro Mello on agent engineering, sovereign infrastructure, FinTech, DevOps and reliable software systems." structuredData={structuredData}>
+  <header class="container blog-hero"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Blog</span></nav><p class="eyebrow">Engineering field notes by Pedro Mello</p><h1>Ideas built from <span>real systems.</span></h1><div class="blog-intro"><p>Deep dives, practical guides and research shaped by the systems I design, ship and debug.</p><div class="topic-list" aria-label="Blog topics">{topics.map((topic)=><span class="topic-pill">{topic}</span>)}</div></div></header>
+  {featured && <section class="container blog-list-section"><article class="featured-post"><a href={`/${featured.id}/`} tabindex="-1" aria-hidden="true"><img src={featured.data.cover} alt={featured.data.coverAlt} /></a><div class="featured-copy"><div class="post-meta"><span class="post-category">Featured · {featured.data.category}</span><span aria-hidden="true">•</span><time datetime={featured.data.publishedAt.toISOString()}>{featureDate}</time></div><h2><a href={`/${featured.id}/`}>{featured.data.title}</a></h2><p>{featured.data.description}</p><a class="text-link" href={`/${featured.id}/`}>Read featured article <span aria-hidden="true">→</span></a></div></article></section>}
+  {remaining.length>0 && <section class="container blog-list-section"><div class="section-heading"><div><p class="eyebrow">Archive</p><h2>All articles</h2></div><p>{posts.length} essays, tutorials and technical studies.</p></div><div class="post-grid">{remaining.map((post)=><PostCard post={post} />)}</div></section>}
+</BaseLayout>

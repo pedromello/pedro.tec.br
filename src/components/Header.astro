@@ -1,0 +1,30 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (path: string) => path === '/' ? pathname === '/' : pathname.startsWith(path);
+const eventsEnabled = import.meta.env.PUBLIC_ENABLE_EVENTS === 'true';
+---
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/" aria-label="Pedro Mello — Home">
+      <img src="/brand/logo.webp" alt="Pedro Mello" width="720" height="138" />
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <div class="nav-links">
+        <a href="/" aria-current={isActive('/') ? 'page' : undefined}>Home</a>
+        <a href="/about/" aria-current={isActive('/about') ? 'page' : undefined}>About</a>
+        <a href="/blog/" aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a>
+        {eventsEnabled && <a href="/events/" aria-current={isActive('/events') ? 'page' : undefined}>Events</a>}
+        <a href="/PedroMello_CV_2025.pdf" target="_blank" data-analytics="resume_download">Resume</a>
+        <a class="nav-cta" href="mailto:contact@pedro.tec.br" data-analytics="email_click">Let's talk ↗</a>
+      </div>
+    </nav>
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation">≡</summary>
+      <nav class="mobile-menu" aria-label="Mobile navigation">
+        <a href="/">Home</a><a href="/about/">About</a><a href="/blog/">Blog</a>{eventsEnabled && <a href="/events/">Events</a>}
+        <a href="/PedroMello_CV_2025.pdf" target="_blank" data-analytics="resume_download">Resume</a>
+        <a href="mailto:contact@pedro.tec.br" data-analytics="email_click">Let's talk</a>
+      </nav>
+    </details>
+  </div>
+</header>

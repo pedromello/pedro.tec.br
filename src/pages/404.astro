@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found | Pedro Mello" description="The requested page could not be found." noindex={true}>
+  <section class="container not-found">
+    <p class="eyebrow">404 · Page not found</p>
+    <h1>This route reached an <span>edge.</span></h1>
+    <p>The page may have moved during the transition from WordPress. The portfolio and every published article remain available from the links below.</p>
+    <div class="hero-actions"><a class="button" href="/">Go home</a><a class="button secondary" href="/blog/">Browse the blog</a><a class="button secondary" href="/about/">About Pedro</a></div>
+  </section>
+</BaseLayout>

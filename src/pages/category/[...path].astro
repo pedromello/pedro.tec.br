@@ -1,0 +1,24 @@
+---
+import LegacyRedirect from '../../layouts/LegacyRedirect.astro';
+
+export function getStaticPaths() {
+  const legacyCategories = [
+    'uncategorized',
+    'computer-science',
+    'ai',
+    'defi',
+    'study',
+    'innovation',
+    'rwa',
+    'defi/lending-protocols',
+    'how-to',
+    'devops',
+    'tutorial',
+    'devops/dns',
+    'devops/ci',
+    'manifold',
+  ];
+  return legacyCategories.map((path) => ({ params: { path } }));
+}
+---
+<LegacyRedirect />
