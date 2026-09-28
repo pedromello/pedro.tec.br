@@ -3,9 +3,6 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from './PostCard.astro';
 
-interface Props { variant?: 'a' | 'b'; preview?: boolean }
-const { variant = 'a', preview = false } = Astro.props;
-
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf()-a.data.publishedAt.valueOf());
 const focusAreas = [
   { number: '01', title: 'Software Engineering Management', text: 'Technical direction, delivery systems and team development — connecting business priorities to maintainable engineering decisions.' },
@@ -77,9 +74,8 @@ const structuredData = {
   ],
 };
 ---
-<BaseLayout title="Pedro Mello | LangChain Certified Agent Engineer" description="Pedro Mello is a Software Engineering Manager at Qwantyco and a LangChain Certified Agent Engineer, with experience in FinTech and payment systems." structuredData={!preview ? structuredData : undefined} noindex={preview}>
-  <div class:list={['home-page', `mobile-prototype-${variant}`]}>
-    {preview && <nav class="prototype-switch container" aria-label="Mobile layout prototypes"><span>Mobile layout</span><a href="/mobile-a/" aria-current={variant === 'a' ? 'page' : undefined}>A · Story first</a><a href="/mobile-b/" aria-current={variant === 'b' ? 'page' : undefined}>B · Portrait first</a></nav>}
+<BaseLayout title="Pedro Mello | LangChain Certified Agent Engineer" description="Pedro Mello is a Software Engineering Manager at Qwantyco and a LangChain Certified Agent Engineer, with experience in FinTech and payment systems." structuredData={structuredData}>
+  <div class="home-page">
     <section class="container hero home-hero">
       <div class="hero-copy">
         <div class="hero-heading"><p class="eyebrow">Software Engineering Manager at Qwantyco · Agent Engineering</p>
