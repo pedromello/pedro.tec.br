@@ -20,8 +20,10 @@ const structuredData = {
       name: 'Pedro Renato Mello',
       alternateName: 'Pedro Mello',
       url: 'https://pedro.tec.br/',
-      jobTitle: 'Software Engineering Manager & Agent Engineer',
-      description: 'Software engineering leader focused on private agent systems, sovereign infrastructure, FinTech and payment systems.',
+      jobTitle: 'Software Engineering Manager at Qwantyco & LangChain Certified Agent Engineer',
+      worksFor: { '@type': 'Organization', name: 'Qwantyco', url: 'https://qwantyco.com/' },
+      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'LangChain Certified Agent Engineer', credentialCategory: 'Certification', recognizedBy: { '@type': 'Organization', name: 'LangChain' } },
+      description: 'Software engineering leader at Qwantyco focused on Agent Engineering and AI, with a background in FinTech and payment systems.',
       image: 'https://pedro.tec.br/brand/pedro-dubai.jpg',
       address: { '@type': 'PostalAddress', addressLocality: 'Rio de Janeiro', addressCountry: 'BR' },
       sameAs: [
@@ -41,21 +43,23 @@ const structuredData = {
   ],
 };
 ---
-<BaseLayout title="About Pedro Mello | Engineering Manager & Agent Engineer" description="Meet Pedro Mello, a software engineering manager focused on private agent systems, sovereign infrastructure, FinTech and reliable software architecture." structuredData={structuredData}>
+<BaseLayout title="About Pedro Mello | Engineering Manager & Agent Engineer" description="Pedro Mello manages software engineering at Qwantyco and is a LangChain Certified Agent Engineer with a background in FinTech and payments." structuredData={structuredData}>
   <article class="about-page">
     <header class="container about-hero">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>About</span></nav>
       <p class="eyebrow">About Pedro Mello</p>
       <div class="about-hero-grid">
         <div><h1>Engineering leadership grounded in <span>systems work.</span></h1></div>
-        <div class="about-lead"><p>I’m Pedro Renato Mello, professionally known as Pedro Mello. I lead software teams and build reliable agent systems for companies that need control over their data, models and operations.</p><p>My work connects product thinking, technical direction and operational discipline — especially where financial rules, privacy and infrastructure ownership matter.</p></div>
+        <div class="about-lead"><p>I’m Pedro Renato Mello, professionally known as Pedro Mello. I’m a Software Engineering Manager at <a class="inline-link" href="https://qwantyco.com/" target="_blank" rel="noopener noreferrer">Qwantyco</a> and a LangChain Certified Agent Engineer.</p><p>My current focus is Agent Engineering and AI. I bring product thinking, technical direction and operational discipline from years of work on FinTech and payment systems.</p></div>
       </div>
     </header>
 
     <section class="about-section border-top"><div class="container about-split">
-      <div><p class="eyebrow">Current focus</p><h2>Private agents on sovereign infrastructure.</h2></div>
-      <div class="about-copy"><p>I approach Agent Engineering as software engineering: explicit tools, measurable evaluations, observability, human checkpoints and dependable deployment practices.</p><p>For private companies, that also means portable models, controlled data paths and the ability to operate without being locked into a single platform vendor.</p></div>
+      <div><p class="eyebrow">Current focus</p><h2>AI systems with engineering discipline.</h2></div>
+      <div class="about-copy"><p>Qwantyco works across AI, cybersecurity, digital infrastructure and automation. As Software Engineering Manager, I lead engineering teams and connect technical decisions with product outcomes.</p><p>I approach Agent Engineering as software engineering: explicit tools, measurable evaluations, observability, human checkpoints and dependable deployment practices.</p></div>
     </div></section>
+
+    <section class="about-section border-top"><div class="container certification-feature"><a href="/PedroMello_LangChain_Agent_Engineer_Certificate.pdf" target="_blank" rel="noopener" aria-label="View my LangChain Agent Engineer certificate"><img src="/brand/langchain-agent-engineer-badge.png" alt="LangChain Certified Agent Engineer badge" width="362" height="400" /></a><div><p class="eyebrow">Certification</p><h2>LangChain Certified Agent Engineer.</h2><p>Certified in the Agent Development Lifecycle with LangChain’s open-source ecosystem and LangSmith. Issued September 27, 2026 · valid through September 27, 2028.</p><a class="text-link" href="/PedroMello_LangChain_Agent_Engineer_Certificate.pdf" target="_blank" rel="noopener">View the full certificate ↗</a></div></div></section>
 
     <section class="about-section border-top"><div class="container">
       <div class="section-heading"><div><p class="eyebrow">Selected experience</p><h2>Proof built under real constraints.</h2></div><p>Financial systems make architecture decisions visible: security, compliance, multiple stakeholders and production reliability cannot be postponed.</p></div>

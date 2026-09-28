@@ -7,7 +7,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b
 const focusAreas = [
   { number: '01', title: 'Software Engineering Management', text: 'Technical direction, delivery systems and team development — connecting business priorities to maintainable engineering decisions.' },
   { number: '02', title: 'Agent Engineering', text: 'Purpose-built agents with explicit tools, evaluation loops, observability and human checkpoints instead of opaque AI wrappers.' },
-  { number: '03', title: 'Sovereign Infrastructure', text: 'Private deployments with controlled data paths, portable models and operational independence from a single platform vendor.' },
+  { number: '03', title: 'Applied AI architecture', text: 'Thoughtful model integration, controlled data paths and practical infrastructure choices that make AI useful beyond a prototype.' },
 ];
 const strengths = [
   { number: '01', title: 'Systems problem solving', text: 'I deconstruct ambiguous problems into constraints, decisions and testable steps — from production incidents to greenfield architecture.' },
@@ -39,7 +39,7 @@ const structuredData = {
       '@id': 'https://pedro.tec.br/#profile',
       url: 'https://pedro.tec.br/',
       name: 'Pedro Mello — Software Engineering Manager & Agent Engineer',
-      description: 'Pedro Mello leads software teams and builds private agent systems on sovereign infrastructure.',
+      description: 'Pedro Mello manages software engineering at Qwantyco and focuses on Agent Engineering and applied AI.',
       inLanguage: 'en-US',
       isPartOf: { '@id': 'https://pedro.tec.br/#website' },
       mainEntity: { '@id': 'https://pedro.tec.br/#person' },
@@ -50,8 +50,10 @@ const structuredData = {
       name: 'Pedro Renato Mello',
       alternateName: 'Pedro Mello',
       url: 'https://pedro.tec.br/',
-      jobTitle: 'Software Engineering Manager & Agent Engineer',
-      description: 'Software engineering leader focused on reliable private agents, sovereign infrastructure, FinTech and payment systems.',
+      jobTitle: 'Software Engineering Manager at Qwantyco & LangChain Certified Agent Engineer',
+      worksFor: { '@type': 'Organization', name: 'Qwantyco', url: 'https://qwantyco.com/' },
+      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'LangChain Certified Agent Engineer', credentialCategory: 'Certification', recognizedBy: { '@type': 'Organization', name: 'LangChain' } },
+      description: 'Software engineering leader at Qwantyco focused on Agent Engineering and AI, with experience in FinTech and payment systems.',
       image: {
         '@type': 'ImageObject',
         url: 'https://pedro.tec.br/brand/pedro-dubai.jpg',
@@ -67,30 +69,30 @@ const structuredData = {
         'https://github.com/pedromello',
         'https://stackoverflow.com/users/6204546/pedro-renato-mello',
       ],
-      knowsAbout: ['Software Engineering Management','Agent Engineering','Sovereign Infrastructure','FinTech','DeFi','Payment Systems','Software Architecture','Python','TypeScript','Solidity'],
+      knowsAbout: ['Software Engineering Management','Agent Engineering','Applied AI','FinTech','DeFi','Payment Systems','Software Architecture','Python','TypeScript','Solidity'],
     },
   ],
 };
 ---
-<BaseLayout title="Pedro Mello | Engineering Manager & Agent Engineer" description="Pedro Mello leads software teams and builds private AI agents on sovereign infrastructure, backed by experience in FinTech, payments and DeFi." structuredData={structuredData}>
+<BaseLayout title="Pedro Mello | LangChain Certified Agent Engineer" description="Pedro Mello is a Software Engineering Manager at Qwantyco and a LangChain Certified Agent Engineer, with experience in FinTech and payment systems." structuredData={structuredData}>
   <div class="home-page">
     <section class="container hero home-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Software Engineering Manager · Agent Engineering</p>
-        <h1><small>Pedro Mello</small>I lead teams building AI systems companies can <span>own.</span></h1>
-        <p class="hero-lead">My focus is Agent Engineering for private companies: reliable agents deployed on sovereign infrastructure, with control over data, models and operations.</p>
-        <p class="hero-context">I bring the same methodical, product-oriented approach I used across FinTech, DeFi, payment systems and private capital markets.</p>
+        <p class="eyebrow">Software Engineering Manager at Qwantyco · Agent Engineering</p>
+        <h1><small>Pedro Mello</small>Engineering teams and <span>AI agents</span> built to work in the real world.</h1>
+        <p class="hero-lead">I lead software engineering at <a class="inline-link" href="https://qwantyco.com/" target="_blank" rel="noopener noreferrer">Qwantyco</a> and focus on Agent Engineering and AI systems. I’m a LangChain Certified Agent Engineer.</p>
+        <p class="hero-context">My background in FinTech, DeFi and payment infrastructure informs how I approach reliability, security and complex product decisions.</p>
         <div class="hero-actions"><a class="button" href="#focus">See my focus <span aria-hidden="true">↓</span></a><a class="button secondary" href="/about/">About my work</a><a class="button secondary" href="/blog/">Read the field notes</a></div>
-        <div class="hero-proof" aria-label="Core positioning"><div><strong>Engineering leadership</strong>Teams, architecture, delivery</div><div><strong>Agent systems</strong>Tools, evals, observability</div><div><strong>Sovereign by design</strong>Private, portable, controlled</div></div>
+        <div class="hero-proof" aria-label="Core positioning"><div><strong>Current role</strong>Software Engineering Manager · Qwantyco</div><div><strong>Certification</strong>LangChain Certified Agent Engineer</div><div><strong>Experience</strong>FinTech, payments, DeFi</div></div>
       </div>
       <div class="portrait-card">
         <div class="portrait-frame"><img src="/brand/pedro-dubai.jpg" alt="Pedro Mello speaking at the Dubai FinTech Summit" width="640" height="780" /></div>
-        <div class="portrait-note"><span>Current focus</span><strong>Engineering leadership and private AI infrastructure.</strong></div>
+        <a class="hero-credential" href="/PedroMello_LangChain_Agent_Engineer_Certificate.pdf" target="_blank" rel="noopener" aria-label="View Pedro Mello's LangChain Agent Engineer certificate"><img src="/brand/langchain-agent-engineer-badge.png" alt="LangChain Certified Agent Engineer badge" width="362" height="400" /><span>View certificate ↗</span></a>
       </div>
     </section>
 
     <section class="home-section border-top" id="focus"><div class="container focus-layout">
-      <div class="focus-intro"><p class="eyebrow">Current direction</p><h2>Agents are software systems, not demos.</h2><p>For private companies, useful AI must be inspectable, measurable and operable inside infrastructure they control. That requires engineering discipline as much as model capability.</p></div>
+      <div class="focus-intro"><p class="eyebrow">Current direction</p><h2>Agents are software systems, not demos.</h2><p>At Qwantyco, I manage software engineering in a company working across AI, cybersecurity, digital infrastructure and automation. My own focus is building agent systems with engineering discipline and measurable outcomes.</p></div>
       <div class="focus-grid">{focusAreas.map((item)=><article class="focus-card"><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.text}</p></div></article>)}</div>
     </div></section>
 
@@ -109,6 +111,6 @@ const structuredData = {
       <div class="writing-grid">{posts.slice(0,4).map((post)=><PostCard post={post} />)}</div>
     </div></section>
 
-    <section class="home-section border-top"><div class="container home-contact"><div><p class="eyebrow">Let's work together</p><h2>Building a team or a private agent platform?</h2><p>I’m interested in engineering leadership and agent-system work where privacy, ownership and reliability are non-negotiable.</p></div><a class="button" href="mailto:contact@pedro.tec.br" data-analytics="email_click">contact@pedro.tec.br ↗</a></div></section>
+    <section class="home-section border-top"><div class="container home-contact"><div><p class="eyebrow">Let's work together</p><h2>Building a team or an AI product?</h2><p>I’m interested in engineering leadership and agent systems where clear product goals, reliability and responsible operations matter.</p></div><a class="button" href="mailto:contact@pedro.tec.br" data-analytics="email_click">contact@pedro.tec.br ↗</a></div></section>
   </div>
 </BaseLayout>
