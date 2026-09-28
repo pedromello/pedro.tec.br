@@ -10,6 +10,7 @@ export default defineConfig({
       if (page.includes('/category/') || page.includes('/tag/')) return false;
       if (page.includes('/comments/') || page.endsWith('/feed/')) return false;
       if (page.includes('/404')) return false;
+      if (page.includes('/mobile-a/') || page.includes('/mobile-b/')) return false;
       if (process.env.PUBLIC_ENABLE_EVENTS !== 'true' && page.endsWith('/events/')) return false;
       return true;
     },
